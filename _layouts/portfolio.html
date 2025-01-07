@@ -3,13 +3,13 @@ layout: default
 ---
     <body>
         {{ content }}
-        {% for post in site.categories["portfolio"] %}
-            <li class="portfolio-list">
-                <a class="portfolio-item" href="{{ post.url }}"
-                    style="background-image:url('{{ post.thumb }}');" 
-                >
-                </a>
-            </li>
-        {% endfor %}
+        <li class="portfolio-list">
+            {% for post in site.categories["portfolio"] %}
+                    <a class="portfolio-item" href="{{ post.url }}"
+                        style="background-image:url('{{ post.thumb }}');" 
+                    >
+                    </a>
+            {% endfor %}
+        </li>
     </body>
 </html>
