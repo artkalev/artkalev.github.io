@@ -1,18 +1,11 @@
 ---
-layout: page
+layout: about
 title: About
 permalink: /about/
 ---
 
-This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](https://jekyllrb.com/)
+# Kalev Mölder.
 
-You can find the source code for Minima at GitHub:
-[jekyll][jekyll-organization] /
-[minima](https://github.com/jekyll/minima)
+I am a Software developer & 3D Generalist with a decade of experience with VFX 3D workflows, VR, AR, WebGL, Unreal Engine, Unity, Blender, Houdini, C++, C#, Python and Lua to name a few. I consider myself a jack of all trades and a master of some.
 
-You can find the source code for Jekyll at GitHub:
-[jekyll][jekyll-organization] /
-[jekyll](https://github.com/jekyll/jekyll)
-
-
-[jekyll-organization]: https://github.com/jekyll
+This site serves the purpose of a blog where I can shout into the void and a Portfolio to showcase some of the things I have done.
