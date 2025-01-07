@@ -4,7 +4,7 @@ title: About
 permalink: /about/
 ---
 
-# Kalev Mölder.
+# Kalev Mölder
 
 I am a Software developer & 3D Generalist with a decade of experience with VFX 3D workflows, VR, AR, WebGL, Unreal Engine, Unity, Blender, Houdini, C++, C#, Python and Lua to name a few. I consider myself a jack of all trades and a master of some.
 
