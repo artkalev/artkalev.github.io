@@ -1,0 +1,18 @@
+.portfolio-list{
+    list-style: none;
+    display: flex;
+}
+
+.portfolio-item{
+    display:block;
+    width:128px;
+    height:128px;
+    background-size: 100%;
+    background-position: center;
+    transition: background-size 1s;
+}
+
+.portfolio-item:hover{
+    background-size: 110%;
+    transition: background-size 1s;
+}

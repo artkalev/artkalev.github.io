@@ -1,0 +1,18 @@
+---
+layout: default
+---
+
+<!DOCTYPE html>
+    <head>
+    </head>
+    <body>
+        {{ content }}
+        {% for post in site.categories["blog"] %}
+            <li class="blog-list">
+                <a class="blog-item" href="{{ post.url }}">
+                    {{ post.title }}
+                </a>
+            </li>
+        {% endfor %}
+    </body>
+</html>
