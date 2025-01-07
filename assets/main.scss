@@ -1,0 +1,67 @@
+---
+---
+
+@import "minima";
+
+body{
+    background-color: #222;
+    color:white;
+}
+
+header{
+    background-color: rgb(0, 43, 43);
+    border-style: none;
+}
+
+footer{
+    background-color: rgb(0, 43, 43);
+}
+
+a{
+    color:aqua;
+}
+
+a:visited{
+    color:aqua;
+}
+
+.site-header{
+    border-bottom-color: rgb(0,99,99);
+}
+
+.site-footer{
+    border-top-color: rgb(0, 99, 99);
+}
+
+.site-title{
+    color:white;
+}
+
+.site-title:visited{
+    color:white;
+}
+
+.site-nav .page-link{
+    color:aqua;
+}
+
+/* portfolio start */
+
+.portfolio-list{
+    list-style: none;
+    display: flex;
+}
+
+.portfolio-item{
+    display:block;
+    width:200px;
+    height:200px;
+    background-size: 100%;
+    background-position: center;
+    transition: background-size 1s;
+}
+
+.portfolio-item:hover{
+    background-size: 110%;
+    transition: background-size 1s;
+}
