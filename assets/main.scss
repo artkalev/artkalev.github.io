@@ -58,6 +58,11 @@ a:visited{
 .portfolio-list{
     list-style: none;
     display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin:0px;
+    padding:0px;
+    max-width:800px;
 }
 
 .portfolio-item{
