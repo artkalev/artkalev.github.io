@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+    <head>
+        <style>
+            body{
+                background-color: black;
+                color: white;
+            }
+        </style>
+    </head>
+    <body>
+        <script src="/assets/main.js"></script>
+        <script>
+            const images = [
+                new Image(),
+                new Image(),
+                new Image()
+            ];
+            let numLoaded = 0;
+            const onImgLoaded = (e) => {
+                numLoaded++;
+                if(numLoaded == images.length){
+
+                    createImageGallery(document.body, images);
+
+                }
+            }
+            for(let i = 0; i < images.length; i++){
+                images[i].onload = onImgLoaded;
+            }
+
+            images[0].src = "/assets/portfolio/house/screen0.png";
+            images[1].src = "/assets/portfolio/house/screen1.png";
+            images[2].src = "/assets/portfolio/house/screen2.png";
+
+        </script>
+    </body>
+</html>
