@@ -18,7 +18,6 @@ function createImageGallery(parent, images){
     root.style.borderColor = "green";
 
     const btn_prev = document.createElement("button");
-    btn_prev.textContent = "previous";
     btn_prev.style.position = "absolute";
     btn_prev.style.left = "0px";
     btn_prev.style.top = "50%";
@@ -36,14 +35,39 @@ function createImageGallery(parent, images){
         setImage(i);
     };
 
+    const svg_prev = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg_prev.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+    svg_prev.setAttribute('viewBox', '0 0 24 24');
+    svg_prev.setAttribute('width', '24');
+    svg_prev.setAttribute('height', '24');
+    svg_prev.setAttribute('fill', 'currentColor');
+
+    const path_prev = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path_prev.setAttribute('d', 'M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6z');
+
+    svg_prev.appendChild(path_prev);
+    btn_prev.appendChild(svg_prev);
+
     const btn_next = document.createElement("button");
-    btn_next.textContent = "next";
     btn_next.style.position = "absolute";
     btn_next.style.right = "0px";
     btn_next.style.top = "50%";
     btn_next.style.zIndex = "100";
     btn_next.style.transform = "translateY(-50%)";
     btn_next.style.height = "100px";
+
+    const svg_next = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg_next.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+    svg_next.setAttribute('viewBox', '0 0 24 24');
+    svg_next.setAttribute('width', '24');
+    svg_next.setAttribute('height', '24');
+    svg_next.setAttribute('fill', 'currentColor');
+
+    const path_next = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path_next.setAttribute('d', 'M8.59 16.59L13.17 12l-4.58-4.59L10 6l6 6-6 6z');
+
+    svg_next.appendChild(path_next);
+    btn_next.appendChild(svg_next);
 
     /**
      * 
