@@ -78,3 +78,39 @@ a:visited{
     background-size: 110%;
     transition: background-size 1s;
 }
+
+/* GALLERY */
+
+.gallery-button{
+    border-style:none;
+    border-radius: 0px;
+    border-width:0px;
+    background-color: rgba(0,50,50,0.5);
+}
+
+.gallery-button svg{
+    fill:rgb(0, 200, 200);
+}
+
+.gallery-button:hover{
+    background-color: rgba(0,100,100, 0.5);
+    cursor: pointer;
+}
+
+.gallery-button:active{
+    background-color:rgba(0,100,100,1);
+}
+
+.gallery-button:hover svg{
+    fill: rgb(0,255,255);
+}
+
+.previous{
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.next{
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}

@@ -1,37 +1,20 @@
 <!DOCTYPE html>
     <head>
+        <link rel="stylesheet" href="/assets/main.css" />
         <style>
             body{
                 background-color: black;
                 color: white;
             }
         </style>
+        <script src="/assets/main.js"></script>
     </head>
     <body>
-        <script src="/assets/main.js"></script>
-        <script>
-            const images = [
-                new Image(),
-                new Image(),
-                new Image()
-            ];
-            let numLoaded = 0;
-            const onImgLoaded = (e) => {
-                numLoaded++;
-                if(numLoaded == images.length){
-
-                    createImageGallery(document.body, images);
-
-                }
-            }
-            for(let i = 0; i < images.length; i++){
-                images[i].onload = onImgLoaded;
-            }
-
-            images[0].src = "/assets/portfolio/house/screen0.png";
-            images[1].src = "/assets/portfolio/house/screen1.png";
-            images[2].src = "/assets/portfolio/house/screen2.png";
-
-        </script>
+        <p>
+            <img src="/assets/portfolio/house/screen0.png" />
+            <img src="/assets/portfolio/house/screen1.png" />
+            <img src="/assets/portfolio/house/screen2.png" />
+        </p>
+        
     </body>
 </html>

@@ -14,11 +14,11 @@ function createImageGallery(parent, images){
     const aspect = images[0].width / images[1].height;
     root.style.aspectRatio = aspect;
     root.style.overflow = "hidden";
-    root.style.borderStyle = "solid";
-    root.style.borderColor = "green";
 
     const btn_prev = document.createElement("button");
     btn_prev.style.position = "absolute";
+    btn_prev.className = "gallery-button";
+    btn_prev.classList.add("previous");
     btn_prev.style.left = "0px";
     btn_prev.style.top = "50%";
     btn_prev.style.zIndex = "100";
@@ -49,6 +49,8 @@ function createImageGallery(parent, images){
     btn_prev.appendChild(svg_prev);
 
     const btn_next = document.createElement("button");
+    btn_next.className = "gallery-button";
+    btn_next.classList.add("next");
     btn_next.style.position = "absolute";
     btn_next.style.right = "0px";
     btn_next.style.top = "50%";
@@ -110,5 +112,36 @@ function createImageGallery(parent, images){
 
     parent.appendChild(root);
 }
+
+/**
+ * 
+ * @param {HTMLElement} parent 
+ * @returns 
+ */
+function containsOnlyImages(parent){
+    if(parent.children.length == 0){return false;}
+    for(let i = 0; i < parent.children.length; i++){
+        if( parent.children[i].tagName != "IMG"){
+            return false;
+        }
+    }
+    return true;
+}
+
+window.addEventListener("load", ()=>{
+    console.log("start onload");
+    const ps = document.querySelectorAll("p");
+    console.log(ps);
+    for(let i = 0; i < ps.length; i++){
+        if(containsOnlyImages(ps[i])){
+            console.log("p contains only images");
+            console.log(ps[i].querySelectorAll("img"));
+            const imgs = ps[i].querySelectorAll("img");
+            if(imgs.length > 1){
+                createImageGallery(ps[i], ps[i].querySelectorAll("img"));
+            }
+        }
+    }
+});
 
 console.log("main.js");
