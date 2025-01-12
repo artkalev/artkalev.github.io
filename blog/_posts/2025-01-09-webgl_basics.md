@@ -202,12 +202,83 @@ gl.shaderSource(vertex_shader, vertex_shader_code);
 
 The next step is to compile the shader code on the GPU. This can be done with <code>gl.compileShader</code>. It is also good idea to add some debugging in case the compilation fails:
 ```javascript
+gl.compileShader(vertex_shader);
+if(!gl.getShaderParameter(vertex_shader, gl.COMPILE_STATUS)){
+    throw new Error("failed to compile vertex shader:"+gl.getShaderInfoLog(vertex_shader));
+}
 ```
+If there are no compilation errors then the vertex shader is ready now.
 
 ## Fragment Shader
 
+Fragment shader controls the look of the pixels that will be rendered. while the vertex shader code is executed for every vertex, the fragment shader is executed for every pixel which would be rendered.
 
+Vertex data can also be passed into the fragment shader. In our program the vertex color data is passed to the fragment shader to color the triangle. In the end of this tutorial you can see how the colors are interpolated on the triangle face.
+
+Fragment shader code looks a bit different from vertex shader code:
+```javascript
+const fragment_shader_code = `#version 300 es
+    precision highp float;
+
+    in vec3 vCol; // the data from vertex shader
+
+    // fragment output value
+    // essentially the color of the output pixel
+    out vec4 outCol;
+
+    void main(){
+        outCol = vec4(vCol, 1.0);
+    }
+```
+
+Next we can define the shader object and compile the shader like we did with the vertex shader:
+```javascript
+const fragment_shader = gl.createShader(gl.FRAGMENT_SHADER);
+gl.shaderSource(fragment_shader, fragment_shader_code);
+gl.compileShader(fragment_shader);
+if(!gl.getShaderParameter(fragment_shader, gl.COMPILE_STATUS)){
+    throw new Error("failed to compile fragment shader:"+gl.getShaderInfoLog(fragment_shader));
+}
+```
+
+Now we have both the vertex shader and fragment shader compiled.
 
 ## Shader Program
 
+In order to use these shaders they must be added to a shader program. In this tutorial we will not do anything more with the shader program.
+
+```javascript
+const shader_program = gl.createProgram();
+gl.attachShader(shader_program, vertex_shader);
+gl.attachShader(shader_program, fragment_shader);
+gl.linkProgram(shader_program);
+
+// also debug the program status
+if(!gl.getProgramParameter(shader_program, gl.LINK_STATUS)){
+    throw new Error("failed to link shader program:"+gl.getProgramInfoLog(shader_program));
+}
+```
+
+After all this work, we finally have defined all the components that are necessary to draw the triangle.
+
 ## Finally Drawing the Triangle
+
+Now we can put all the things together to draw the triangle. The actual code for this is quite short:
+
+```javascript
+gl.bindVertexArray(vao); // our vertex array object
+gl.useProgram(shader_program); // our shader program
+gl.drawArrays(
+    gl.TRIANGLES, // drawing mode
+    0, // index of the first vertex to draw
+    3  // number of vertices to draw
+);
+```
+
+The result is a triangle with interpolated vertex colors on it.
+
+<iframe src="/assets/demos/triangle/hello.html" style="width:100%;height:auto;aspect-ratio:16/9"></iframe>
+
+Drawing a single triangle might seem simplistic but it is a necessary first step to drawing something more complex.
+
+I hope this introduction into WebGL2 has been useful for someone. In the next tutorial we will be creating a UV vertex attribute and drawing a texture in the fragment shader.
