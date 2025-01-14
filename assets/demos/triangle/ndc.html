@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+    <head>
+        <style>
+            body{
+                padding:0px;
+                margin:0px;
+            }
+
+            canvas{
+                position: absolute;
+                width: 100%;
+                height: 100%;
+            }
+        </style>
+    </head>
+    <body>
+        <script id="vertex-shader" type="x-vertex-shader">#version 300 es
+            precision highp float;
+            layout(location=0) in vec3 aPos;
+            layout(location=1) in vec4 aCol;
+            out vec4 vCol;
+
+            void main(){
+                vCol = aCol;
+                gl_Position = vec4(aPos, 1.0);
+            }
+        </script>
+
+        <script id="fragment-shader" type="x-fragment-shader">#version 300 es
+            precision highp float;
+            in vec4 vCol;
+            out vec4 outCol;
+            void main(){
+                outCol = vCol;
+            }
+        </script>
+
+        <script type="module">
+
+            import {Drawing} from "../../lib/drawing.js";
+
+            const canvas = document.createElement("canvas");
+            const gl = canvas.getContext("webgl2");
+            document.body.appendChild(canvas);
+
+            const drawing = new Drawing(canvas, gl);
+
+            drawing.addLines(
+                new Float32Array([
+                    -1.0, -1.0, 0.0,
+                     1.0, -1.0, 0.0,
+                    -1.0, -1.0, 0.0,
+                     0.0,  1.0, 0.0,
+                     0.0,  1.0, 0.0,
+                     1.0, -1.0, 0.0
+                ]),
+                new Uint8Array([
+                    255,  0,  0,255,
+                      0,255,  0,255,
+                    255,  0,  0,255,
+                      0,  0,255,255,
+                      0,  0,255,255,
+                      0,255,  0,255
+                ])
+            );
+
+            drawing.addLineCube(2,2,2);
+
+            drawing.addText(0,0,0, "test (0,1,2)");
+
+            console.log(drawing.meshes);
+
+            drawing.draw();
+
+        </script>
+    </body>
