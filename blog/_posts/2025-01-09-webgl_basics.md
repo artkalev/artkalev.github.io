@@ -60,6 +60,9 @@ Our purpose is to draw a single triangle. There are a few things that need to be
 We must create a buffer(array of values) that will be passed on to the GPU by WebGL2, which defines the positions of the vertices of the triangle.
 
 The triangle needs to be defined in the Normalized Device Coordinate(NDC) space which is essentially a cube with the minimum at (-1,-1,-1) and maximum at (+1,+1,+1).
+<iframe src="/assets/demos/triangle/ndc.html" style="width:100%;height:auto;aspect-ratio:16/9"></iframe>
+This cube is the volume in which everything is drawn by WebGL. This means that all the mesh coordinates must fit into this cube to be visible.
+
 
 Lets start with defining a typed javascript array for the positions:
 ```javascript
