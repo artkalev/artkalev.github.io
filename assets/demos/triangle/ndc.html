@@ -40,7 +40,7 @@
             import {Drawing} from "../../lib/drawing.js";
 
             const canvas = document.createElement("canvas");
-            const gl = canvas.getContext("webgl2");
+            const gl = canvas.getContext("webgl2", {antialias:0});
             document.body.appendChild(canvas);
 
             const drawing = new Drawing(canvas, gl);
@@ -61,16 +61,33 @@
                       0,  0,255,255,
                       0,  0,255,255,
                       0,255,  0,255
-                ])
+                ]),
+                4
             );
 
             drawing.addLineCube(2,2,2);
 
-            drawing.addText(0,0,0, "test (0,1,2)");
+            drawing.addText(-1.5,-1.1,-1.01, "(-1,-1,-1)");
+            drawing.addText(-1.5, 1,-1.01, "(-1,+1,-1)");
+            drawing.addText(0.5, 1,-1.01, "(+1,+1,-1)");
+            drawing.addText(0.5,-1.1,-1.01, "(+1,-1,-1)");
+            drawing.addText(-1.5,-1.1, 1.01, "(-1,-1, 1)");
+            drawing.addText(-1.5, 1, 1.01, "(-1,+1, 1)");
+            drawing.addText(0.5, 1, 1.01, "(+1,+1, 1)");
+            drawing.addText(0.5,-1.1, 1.01, "(+1,-1, 1)");
 
             console.log(drawing.meshes);
+            drawing.viewPos[2] = 4;
 
-            drawing.draw();
+            function loop(){
+                const t = Date.now();
+                requestAnimationFrame(loop);
+                drawing.viewPos[0] = Math.sin(t * 0.0001);
+                drawing.viewNeedsUpdate = true;
+                drawing.draw();
+            }
+            
+            loop();
 
         </script>
     </body>
