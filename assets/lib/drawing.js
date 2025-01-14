@@ -282,7 +282,6 @@ class Texture2D{
         this.isInitialized = false;
         this.needsUpdate = false;
         this.img.onload = ()=>{
-            console.log("onload");
             this.needsUpdate = true;
         }
         this.img.src = this.url;
@@ -309,7 +308,6 @@ class Texture2D{
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
         this.needsUpdate = false;
-        console.log("updated tex");
     }
 
     /** 
@@ -324,7 +322,6 @@ class Texture2D{
         }
         gl.activeTexture(gl.TEXTURE0 + index);
         gl.bindTexture(gl.TEXTURE_2D, this.tex);
-        console.log("bound texture");
     }
 }
 
