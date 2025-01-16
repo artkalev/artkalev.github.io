@@ -27,11 +27,14 @@
             precision highp float;
             layout(location=0) in vec2 aPos; // position attribute bound at location 0
             layout(location=1) in vec3 aCol; // color attribute bound at location 1
+            layout(location=2) in vec2 aUv;
 
             out vec3 vCol; // varying color data which is passed on to the fragment shader
+            out vec2 vUv;
 
             void main(){
                 vCol = aCol;
+                vUv = aUv;
                 gl_Position = vec4(aPos, 0.0, 1.0);
             }
         `;
@@ -40,10 +43,11 @@
             precision highp float;
 
             in vec3 vCol; // the varying color data from vertex shader
+            in vec2 vUv; // the varying uv data from vertex shader
             out vec4 outCol; // output fragment color
 
             void main(){
-                outCol = vec4(vCol, 1.0);
+                outCol = vec4(vUv, 0.0, 1.0);
             }
         `;
 
@@ -85,6 +89,12 @@
               0,   0, 255
         ]);
 
+        const vertex_uv_data = new Float32Array([
+            0.0, 1.0,
+            1.0, 1.0,
+            0.0, 0.0
+        ]);
+
         const vertex_pos_buffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, vertex_pos_buffer);
         gl.bufferData(gl.ARRAY_BUFFER, vertex_pos_data, gl.STATIC_DRAW);
@@ -92,6 +102,10 @@
         const vertex_color_buffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, vertex_color_buffer);
         gl.bufferData(gl.ARRAY_BUFFER, vertex_color_data, gl.STATIC_DRAW);
+
+        const vertex_uv_buffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, vertex_uv_buffer);
+        gl.bufferData(gl.ARRAY_BUFFER, vertex_uv_data, gl.STATIC_DRAW);
 
         const vao = gl.createVertexArray();
 
@@ -117,6 +131,16 @@
             0, 0 // not important for now
         );
 
+        gl.bindBuffer(gl.ARRAY_BUFFER, vertex_uv_buffer);
+        gl.enableVertexAttribArray(2);
+        gl.vertexAttribPointer(
+            2, // attribute index: 2: aUV
+            2,
+            gl.FLOAT,
+            false,
+            0,0
+        );
+
         gl.bindVertexArray(null); // end the "recording"
         gl.bindBuffer(gl.ARRAY_BUFFER, null); // clear the binding just in case
 
@@ -128,5 +152,24 @@
         gl.bindVertexArray(vao);
         gl.drawArrays(gl.TRIANGLES, 0, 3);
 
+        ///////////////////
+        // texture start //
+        ///////////////////
+
+        // add uvs to the vertex array
+
+        const pixel_data = new Uint8Array([
+            255,  0,  0,255,        0,255,  0,255,
+              0,  0,  0,255,      255,255,255,255
+        ]);
+
+        const texture = gl.createTexture();
+        gl.bindTexture(gl.TEXTURE_2D, texture);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 2, 2, 0, gl.RGBA, gl.UNSIGNED_BYTE, pixel_data);
+
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+        gl.texParameterf(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT);
+        gl.texParameterf(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.REPEAT);
     </script>
 </body>
