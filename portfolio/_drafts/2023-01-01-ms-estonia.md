@@ -5,7 +5,7 @@ title: MS Estonia Asset & Rendering
 
 IMAGE HERE
 
-It was my task to prepare the MS Estonia ship asset and render the shot of the ship leaving port.
+It was my task to prepare the MS Estonia ship asset and render the shot of it leaving port.
 
 # Asset
 
