@@ -56,3 +56,6 @@ void main(){
     outCol = texture(uTex, vUv);
 }
 ```
+
+## Vertex Data Changes
+
