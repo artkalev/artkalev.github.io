@@ -229,6 +229,13 @@ a:hover{
   height:auto;
 }
 
+.post-content iframe{
+  width:100%;
+  height:auto;
+  aspect-ratio: 16/9;
+  margin-bottom: 1.5em;
+}
+
 /* portfolio start */
 
 .portfolio-list{
