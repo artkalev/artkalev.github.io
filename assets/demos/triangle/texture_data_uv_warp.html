@@ -49,7 +49,11 @@
             out vec4 outCol;
 
             void main(){
-                vec4 pixel = texture(uTex0, vUv);
+                vec2 uv = vUv;
+                uv *= 8.0;
+                uv.x *= sin(vUv.x * 6.0);
+                uv.y *= sin(vUv.y * 6.0);
+                vec4 pixel = texture(uTex0, uv);
                 outCol = pixel;
             }
         `;

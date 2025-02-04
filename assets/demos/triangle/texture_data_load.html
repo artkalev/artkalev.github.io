@@ -25,11 +25,11 @@
         document.body.appendChild(canvas);
         const vertex_code = `#version 300 es
             precision highp float;
-            layout(location=0) in vec2 aPos; // position attribute bound at location 0
-            layout(location=1) in vec3 aCol; // color attribute bound at location 1
+            layout(location=0) in vec2 aPos;
+            layout(location=1) in vec3 aCol; 
             layout(location=2) in vec2 aUv;
 
-            out vec3 vCol; // varying color data which is passed on to the fragment shader
+            out vec3 vCol;
             out vec2 vUv;
 
             void main(){
@@ -42,14 +42,15 @@
         const fragment_code = `#version 300 es
             precision highp float;
 
-            uniform sampler2D uTex;
+            uniform sampler2D uTex0;
 
-            in vec3 vCol; // the varying color data from vertex shader
-            in vec2 vUv; // the varying uv data from vertex shader
-            out vec4 outCol; // output fragment color
+            in vec3 vCol;
+            in vec2 vUv;
+            out vec4 outCol;
 
             void main(){
-                outCol = texture(uTex, vUv);
+                vec4 pixel = texture(uTex0, vUv);
+                outCol = pixel;
             }
         `;
 
@@ -79,8 +80,6 @@
             throw new Error("failed to link shader program: "+ gl.getProgramInfoLog(shader_program));
         }
 
-        const uTexLoc = gl.getUniformLocation(shader_program, "uTex");
-
         const vertex_pos_data = new Float32Array([
             -1.0, -1.0, 
              1.0, -1.0, 
@@ -94,9 +93,9 @@
         ]);
 
         const vertex_uv_data = new Float32Array([
-            0.0, 1.0,
-            1.0, 1.0,
-            0.5, 0.0
+            0.0, 0.0,
+            1.0, 0.0,
+            0.5, 1.0
         ]);
 
         const vertex_pos_buffer = gl.createBuffer();
@@ -148,43 +147,60 @@
         gl.bindVertexArray(null); // end the "recording"
         gl.bindBuffer(gl.ARRAY_BUFFER, null); // clear the binding just in case
 
-        const pixel_data = new Uint8Array([
-            255,  0,  0,255,        0,255,  0,255,
-            255,255,  0,255,        0,255,255,255
+        
+        const texture_pixels = new Uint8Array([
+            //      0       |       1        |      2         |       3        |       4
+             50, 50, 50,255,  50, 50, 50,255,  50, 50, 50,255,  50, 50, 50,255,  50, 50, 50,255,
+             50, 50, 50,255,  50, 50, 50,255,   0,255,  0,255,  50, 50, 50,255,  50, 50, 50,255,
+             50, 50, 50,255, 255,  0,  0,255, 255,255,255,255, 255,  0,255,255,  50, 50, 50,255,
+             50, 50, 50,255,  50, 50, 50,255,   0,  0,255,255,  50, 50, 50,255,  50, 50, 50,255,
+             50, 50, 50,255,  50, 50, 50,255,  50, 50, 50,255,  50, 50, 50,255,  50, 50, 50,255,
         ]);
 
         const texture = gl.createTexture();
         gl.bindTexture(gl.TEXTURE_2D, texture);
-        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 2, 2, 0, gl.RGBA, gl.UNSIGNED_BYTE, pixel_data);
+        gl.texImage2D(
+            gl.TEXTURE_2D, // target
+            0, // level
+            gl.RGBA, // internal format
+            5, // width
+            5, // height
+            0, // border
+            gl.RGBA, // format
+            gl.UNSIGNED_BYTE, // type
+            texture_pixels // data
+        );
 
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
-        gl.texParameterf(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT);
-        gl.texParameterf(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.REPEAT);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.REPEAT);
 
-        const image = new Image();
-        image.onload = ()=>{
+        const img = new Image();
+        img.onload = () => {
             gl.bindTexture(gl.TEXTURE_2D, texture);
-            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
             draw();
-        }
-        image.src = "./tex.png";
+        };
+        img.src = "./tex.png";
+
+        gl.activeTexture(gl.TEXTURE0);
+        gl.bindTexture(gl.TEXTURE_2D, texture);
 
         function draw(){
-            gl.activeTexture(gl.TEXTURE0);
-            gl.bindTexture(gl.TEXTURE_2D, texture);
-
             gl.clearColor(0,0,0,1);
             gl.clear(gl.COLOR_BUFFER_BIT);
 
-            // start drawing the triangle
             gl.useProgram(shader_program);
+            const uTex0Location = gl.getUniformLocation(shader_program, "uTex0");
+            gl.uniform1i(uTex0Location, 0);
+
             gl.bindVertexArray(vao);
             gl.drawArrays(gl.TRIANGLES, 0, 3);
         }
-
-        
+    
+        draw();
     </script>
 </body>

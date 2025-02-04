@@ -25,11 +25,11 @@
         document.body.appendChild(canvas);
         const vertex_code = `#version 300 es
             precision highp float;
-            layout(location=0) in vec2 aPos; // position attribute bound at location 0
-            layout(location=1) in vec3 aCol; // color attribute bound at location 1
+            layout(location=0) in vec2 aPos;
+            layout(location=1) in vec3 aCol; 
             layout(location=2) in vec2 aUv;
 
-            out vec3 vCol; // varying color data which is passed on to the fragment shader
+            out vec3 vCol;
             out vec2 vUv;
 
             void main(){
@@ -42,9 +42,9 @@
         const fragment_code = `#version 300 es
             precision highp float;
 
-            in vec3 vCol; // the varying color data from vertex shader
-            in vec2 vUv; // the varying uv data from vertex shader
-            out vec4 outCol; // output fragment color
+            in vec3 vCol;
+            in vec2 vUv;
+            out vec4 outCol;
 
             void main(){
                 outCol = vec4(vUv, 0.0, 1.0);
@@ -90,9 +90,9 @@
         ]);
 
         const vertex_uv_data = new Float32Array([
-            0.0, 1.0,
-            1.0, 1.0,
-            0.0, 0.0
+            0.0, 0.0,
+            1.0, 0.0,
+            0.5, 1.0
         ]);
 
         const vertex_pos_buffer = gl.createBuffer();
@@ -152,24 +152,5 @@
         gl.bindVertexArray(vao);
         gl.drawArrays(gl.TRIANGLES, 0, 3);
 
-        ///////////////////
-        // texture start //
-        ///////////////////
-
-        // add uvs to the vertex array
-
-        const pixel_data = new Uint8Array([
-            255,  0,  0,255,        0,255,  0,255,
-              0,  0,  0,255,      255,255,255,255
-        ]);
-
-        const texture = gl.createTexture();
-        gl.bindTexture(gl.TEXTURE_2D, texture);
-        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 2, 2, 0, gl.RGBA, gl.UNSIGNED_BYTE, pixel_data);
-
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
-        gl.texParameterf(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT);
-        gl.texParameterf(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.REPEAT);
     </script>
 </body>
