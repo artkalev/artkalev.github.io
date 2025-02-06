@@ -12,8 +12,6 @@ Texture coordinates are needed to define how the 2D texture image is mapped on t
 - <code>vec2(0.0, 0.0)</code>
 - <code>vec2(1.0, 1.0)</code>
 
-EXAMPLE_HERE
-
 ## UV Attribute
 
 Strictly speaking we could use any coordinate to map the texture to the surfaces but in most cases a special UV coordinate data must be created to avoid heavy distortion of the texture when rendering.
