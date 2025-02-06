@@ -95,9 +95,9 @@
         ]);
 
         const vertex_uv_data = new Float32Array([
-            0.0, 0.0,
-            1.0, 0.0,
-            0.5, 1.0
+            0.0, 1.0,
+            1.0, 1.0,
+            0.5, 0.0
         ]);
 
         const vertex_pos_buffer = gl.createBuffer();
@@ -181,16 +181,31 @@
         gl.activeTexture(gl.TEXTURE0);
         gl.bindTexture(gl.TEXTURE_2D, texture);
 
+        const img = new Image();
+        img.onload = () => {
+            gl.bindTexture(gl.TEXTURE_2D, texture);
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+            draw();
+        };
+        img.src = "./tex.png";
 
-        gl.clearColor(0,0,0,1);
-        gl.clear(gl.COLOR_BUFFER_BIT);
-        // start drawing the triangle
-        gl.useProgram(shader_program);
+        gl.activeTexture(gl.TEXTURE0);
+        gl.bindTexture(gl.TEXTURE_2D, texture);
 
-        const uTex0Location = gl.getUniformLocation(shader_program, "uTex0");
-        gl.uniform1i(uTex0Location, 0);
+        function draw(){
+            gl.clearColor(0,0,0,1);
+            gl.clear(gl.COLOR_BUFFER_BIT);
 
-        gl.bindVertexArray(vao);
-        gl.drawArrays(gl.TRIANGLES, 0, 3);
+            gl.useProgram(shader_program);
+            const uTex0Location = gl.getUniformLocation(shader_program, "uTex0");
+            gl.uniform1i(uTex0Location, 0);
+
+            gl.bindVertexArray(vao);
+            gl.drawArrays(gl.TRIANGLES, 0, 3);
+        }
+    
+        draw();
     </script>
 </body>
