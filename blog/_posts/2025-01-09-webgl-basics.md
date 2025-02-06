@@ -285,3 +285,5 @@ The result is a triangle with interpolated vertex colors on it.
 Drawing a single triangle might seem simplistic but it is a necessary first step to drawing something more complex.
 
 I hope this introduction into WebGL2 has been useful for someone. In the next tutorial we will be creating a UV vertex attribute and drawing a texture in the fragment shader.
+
+Next: [WebGL Basics: Texture]({% post_url 2025-02-06-webgl-basics-texture %})

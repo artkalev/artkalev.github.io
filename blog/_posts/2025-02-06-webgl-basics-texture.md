@@ -272,16 +272,53 @@ In the webgl context we must use javascript Image object to load the file and up
 We must also wrap our drawing logic into a function because we need to redraw the triangle once the image has loaded and the texture data updated. Lets start with wrapping the drawing related function calls:
 
 ```javascript
-gl.clearColor(0,0,0,1);
-gl.clear(gl.COLOR_BUFFER_BIT);
+function draw(){
+    gl.clearColor(0,0,0,1);
+    gl.clear(gl.COLOR_BUFFER_BIT);
 
-gl.useProgram(shader_program);
-const uTex0Location = gl.getUniformLocation(shader_program, "uTex0");
-gl.uniform1i(uTex0Location, 0);
+    gl.useProgram(shader_program);
+    const uTex0Location = gl.getUniformLocation(shader_program, "uTex0");
+    gl.uniform1i(uTex0Location, 0);
 
-gl.bindVertexArray(vao);
-gl.drawArrays(gl.TRIANGLES, 0, 3);
+    gl.bindVertexArray(vao);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+}
+
+draw(); // first draw with the current cross texture
 ```
+
+The image can be loaded as usual with javascript but we need extra code in the <code>onload</code> callback of the <code>Image</code> object.
+
+```javascript
+const img = new Image();
+
+// executed when the image has been loaded
+img.onload = () => {
+    // binding the texture created before
+    gl.bindTexture(gl.TEXTURE_2D, texture);
+    // assigning new data to the texture
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
+
+    // changing the filtering method
+    // my test texture is quite high resolution
+    // so it looks better with LINEAR filtering
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+
+    draw(); // redrawing the triangle to display new texture
+};
+
+// it's important to define the onload method 
+// before setting the src.
+
+img.src = "./tex.png" // the path to image file
+```
+
+Unfortunately modern browsers will block the image loading request when you are opening the html file directly. Use any http serving software to serve html under localhost. <code>python -m http.server</code> is a quick and simple way to host some directory under localhost for example.
+
+Now you should see that the cross texture is replaced with the image file on the triangle.
+
+<iframe src="/assets/demos/triangle/texture_data_load.html"></iframe>
 
 ## Texture Coordinate Math
 
@@ -301,7 +338,6 @@ Now lets try some more complex coordinate manipulation:
 
 ```glsl
 vec2 uv = vUv;
-uv *= 8.0;
 uv.x *= sin(vUv.x * 6.0);
 uv.y *= sin(vUv.y * 6.0);
 vec4 pixel = texture(uTex0, uv);
@@ -310,3 +346,9 @@ vec4 pixel = texture(uTex0, uv);
 <iframe src="/assets/demos/triangle/texture_data_uv_warp.html"></iframe>
 
 The result is a variable scaling of the coordinates across the triangle. This is a simple effect but I think it demonstrates the possibilities of manipulating the texture coordinates well.
+
+## The End
+
+The amount of information might seem a bit overwhelming at first, but I hope you have gained some intuition on how using textures works in webgl application context.
+
+Next tutorial will be on the topic of framebuffers.
