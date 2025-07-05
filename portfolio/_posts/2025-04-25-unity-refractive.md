@@ -2,12 +2,12 @@
 layout: post
 title: "Unity URP Refractive Shader"
 date: 2025-04-25  09:00:00
-thumb: "/assets/portfolio/unity_urp_refractive_shader"
+thumb: "/assets/portfolio/unity_urp_refractive_shader/thumb.png"
 tags:
 ---
 
 ![Hero Image](/assets/portfolio/unity_urp_refractive_shader/screen_0.png)
-[Link to Asset Here]()
+[https://assetstore.unity.com/packages/slug/315202](https://assetstore.unity.com/packages/slug/315202)
 
 I created the refractive material shader for Unity Universal Render Pipeline(URP) because the URP does not have a built in shader or material setup for that and because I really like distortion effect shaders.
 
