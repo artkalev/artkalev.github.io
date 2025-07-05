@@ -6,7 +6,7 @@ thumb: "/assets/portfolio/unity_urp_refractive_shader"
 tags:
 ---
 
-![Hero Image](/assets/portfolio/unity_urp_refractive_shader/screen.png)
+![Hero Image](/assets/portfolio/unity_urp_refractive_shader/screen_0.png)
 [Link to Asset Here]()
 
 I created the refractive material shader for Unity Universal Render Pipeline(URP) because the URP does not have a built in shader or material setup for that and because I really like distortion effect shaders.
@@ -23,17 +23,9 @@ Some specific functions which don't exist as nodes or are too inconvenient to vi
 
 ## Stable Screen Space Offset
 
-Refractive effects usually use a background texture and sample it with some offset UV coordinates to distort the background texture. A very simple way is to just use a screen space normal coordinate to add an offset into screen space UVs.
+Refractive effects usually use a background texture and sample it with some offset UV coordinates to distort the background texture. A very simple way is to just use a screen space normal coordinate to add an offset into screen space UVs. It creates a distortion effect but it produces a distracting distortion when the camera view is rotated in relation to the object.
 
-![example video]()
-
-It creates a distortion effect but it produces a distracting distortion when the camera view is rotated in relation to the object.
-
-My method involves doing all the calculations in world space and convert the result into screen (clip) space last.
-
-![example video]()
-
-This ensures that the distortion is created consistently in relation to world space coordinates and result in the distortion effect looking consistent when moving and rotating the view camera.
+My method involves doing all the calculations in world space and converting the result into screen (clip) space last. This ensures that the distortion is created consistently in relation to world space coordinates. The result is very consistent looking refraction effect when moving and panning the camera around in the scene.
 
 ## Blurring
 
@@ -46,3 +38,7 @@ One way to overcome this limitation is to sample the texture multiple times with
 More efficient way is to enable mipmapping for the background texture. This way the texture can be sampled at any specific mipmap level to get a downscaled version of the texture.
 
 I wrote a custom URP Render Feature in order to get access to a background texture which has mipmaps to sample. The feature works well and I managed to even add Instanced XR support into it (only PC VR for now).
+
+## Conclusion
+
+I have always had an affinity to distortion shader effects and I really like how this shader has turned out. Creating the mipmapped opaque texture render feature gave me a lot of new knowledge and experience with developing custom render features in Unity URP render pipeline. I'm sure it will be useful for future projects.
