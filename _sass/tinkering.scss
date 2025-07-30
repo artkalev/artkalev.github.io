@@ -1,0 +1,174 @@
+$text-color: rgb(255, 255, 255);
+$brand-bg-col: rgb(10, 20, 20);
+$brand-text-col: white;
+$site-bg-col: #222;
+
+body{
+    background-color: $site-bg-col;
+    color:$text-color;
+}
+
+article{
+    max-width: 600px;
+}
+
+iframe{
+    border-style:none;
+}
+
+footer{
+    background-color: rgb(0, 43, 43);
+}
+
+a{
+    color:white;
+}
+
+a:visited{
+    color:white;
+}
+
+a:hover{
+  color:aqua;
+}
+
+.wrapper{
+    max-width: 900px;
+}
+
+.site-header{
+    background-color: $brand-bg-col;
+    padding:0.75em;
+    border: none;
+}
+
+.site-footer{
+    background-color: $brand-bg-col;
+    border: none;
+}
+
+.site-title{
+    color:white;
+    font-weight: bold;
+}
+
+.site-title:visited{
+    color:white;
+}
+
+.site-nav .page-link{
+    color:white;
+    font-weight: bold;
+}
+
+.post-content video{
+  width:100%;
+  height:auto;
+}
+
+.post-content iframe{
+  width:100%;
+  height:auto;
+  aspect-ratio: 16/9;
+  margin-bottom: 1.5em;
+}
+
+/* blog post list start */
+
+.blog-list{
+  list-style-type:disc;
+}
+
+.blog-item a{
+  font-weight: bold;
+}
+
+/* portfolio start */
+
+.portfolio-list{
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin:0px;
+    padding:0px;
+    width:100%;
+}
+
+.portfolio-list-item{
+    padding:4px;
+}
+
+.portfolio-item{
+    display:block;
+    width:292px;
+    height:auto;
+    aspect-ratio: 1;
+    background-size: 100%;
+    background-position: center;
+    transition: background-size 1s;
+    border-radius:4px;
+}
+
+.portfolio-item:hover{
+    background-size: 110%;
+    transition: background-size 1s;
+}
+
+/* GALLERY */
+
+.gallery-button{
+    border-style:none;
+    border-radius: 0px;
+    border-width:0px;
+    background-color: rgba(0,50,50,0.5);
+}
+
+.gallery-button svg{
+    fill:rgb(0, 200, 200);
+}
+
+.gallery-button:hover{
+    background-color: rgba(0,100,100, 0.5);
+    cursor: pointer;
+}
+
+.gallery-button:active{
+    background-color:rgba(0,100,100,1);
+}
+
+.gallery-button:hover svg{
+    fill: rgb(0,255,255);
+}
+
+.previous{
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.next{
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.about-content{
+  max-width: 600px;
+}
+
+@media screen and (max-width: 600px){
+    .site-nav {
+        background-color: rgb(0, 43, 43);
+        border-width: 1px;
+        border-color: rgb(0, 99, 99);
+    }
+
+    .site-nav .menu-icon > svg {
+        fill: rgb(0, 99, 99);
+    }
+
+    .portfolio-item{
+        width:100vw !important;
+        height:auto;
+        aspect-ratio: 1;
+    }
+}
