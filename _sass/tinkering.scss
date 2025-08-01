@@ -22,10 +22,15 @@ footer{
 
 a{
     color:white;
+    font-weight: bold;
 }
 
 a:visited{
     color:white;
+}
+
+.post-content p a{
+    text-decoration: underline;
 }
 
 a:hover{
